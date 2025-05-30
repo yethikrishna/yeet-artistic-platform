@@ -1,0 +1,35 @@
+# YEET Platform GitHub Pages Configuration
+
+# Site settings
+title: "YEET Artistic Community Platform"
+description: "Revolutionary artistic community platform by Yethikrishna R - Fusing Carnatic tradition with modern innovation"
+baseurl: "/yeet-artistic-platform"
+url: "https://yethikrishna.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: "Yethikrishna R"
+social:
+  name: "Yethikrishna R"
+  links:
+    - "https://github.com/yethikrishna"
+
+# Exclude from processing
+exclude:
+  - node_modules/
+  - .git/
+  - .gitignore
+  - README.md
+  - yeet_project/
+  - docs/
+  - "*.zip"
