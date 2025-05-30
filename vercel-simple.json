@@ -1,0 +1,6 @@
+{
+  "name": "yeet-platform-by-yethikrishna",
+  "buildCommand": "cd yeet-website && npm run build",
+  "outputDirectory": "yeet-website/dist",
+  "installCommand": "cd yeet-website && npm install"
+}
