@@ -1,0 +1,6 @@
+{
+  "name": "yeet-platform-by-yethikrishna",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install"
+}
