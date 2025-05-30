@@ -1,23 +1,6 @@
 {
   "name": "yeet-platform-by-yethikrishna",
   "version": 2,
-  "builds": [
-    {
-      "src": "yeet-website/package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/yeet-website/$1"
-    }
-  ],
-  "functions": {
-    "yeet-website/src/**": {
-      "includeFiles": "yeet-website/**"
-    }
-  },
   "buildCommand": "cd yeet-website && npm run build",
   "outputDirectory": "yeet-website/dist",
   "installCommand": "cd yeet-website && npm install",
@@ -25,7 +8,13 @@
   "framework": "vite",
   "redirects": [
     {
-      "source": "/",
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
@@ -40,6 +29,10 @@
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
         }
       ]
     }
