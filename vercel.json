@@ -1,17 +1,11 @@
 {
   "name": "yeet-platform-by-yethikrishna",
   "version": 2,
-  "buildCommand": "cd yeet-website && npm run build",
-  "outputDirectory": "yeet-website/dist",
-  "installCommand": "cd yeet-website && npm install",
-  "devCommand": "cd yeet-website && npm run dev",
   "framework": "vite",
-  "redirects": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -29,10 +23,6 @@
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
         }
       ]
     }
