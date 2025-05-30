@@ -1,0 +1,252 @@
+# YEET BY YETHIKRISHNA R - DOCKER COMPOSE CONFIGURATION
+# Development environment setup for artistic community platform
+
+version: '3.8'
+
+services:
+  # =============================================================================
+  # DATABASE SERVICES
+  # =============================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: yeet_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: yeet_db
+      POSTGRES_USER: yeet_user
+      POSTGRES_PASSWORD: yeet_password
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - yeet_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yeet_user -d yeet_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: yeet_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass yeet_redis_password
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - yeet_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # APPLICATION SERVICES
+  # =============================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: yeet_backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://yeet_user:yeet_password@postgres:5432/yeet_db
+      REDIS_URL: redis://:yeet_redis_password@redis:6379
+      JWT_SECRET: dev_jwt_secret_key_not_for_production
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    ports:
+      - "5000:5000"
+      - "9229:9229"  # Debug port
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./uploads:/app/uploads
+    networks:
+      - yeet_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: yeet_frontend
+    restart: unless-stopped
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
+      REACT_APP_WEBSOCKET_URL: ws://localhost:5000
+      CHOKIDAR_USEPOLLING: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - yeet_network
+    depends_on:
+      - backend
+    command: npm run dev
+
+  # =============================================================================
+  # DEVELOPMENT TOOLS
+  # =============================================================================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: yeet_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@yeet.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - yeet_network
+    depends_on:
+      - postgres
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: yeet_redis_commander
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:yeet_redis_password
+    ports:
+      - "8081:8081"
+    networks:
+      - yeet_network
+    depends_on:
+      - redis
+
+  # =============================================================================
+  # MONITORING & OBSERVABILITY
+  # =============================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: yeet_prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - yeet_network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: yeet_grafana
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+      GF_USERS_ALLOW_SIGN_UP: false
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infrastructure/monitoring/grafana:/etc/grafana/provisioning
+    networks:
+      - yeet_network
+    depends_on:
+      - prometheus
+
+  # =============================================================================
+  # TESTING SERVICES
+  # =============================================================================
+  test_db:
+    image: postgres:15-alpine
+    container_name: yeet_test_postgres
+    restart: "no"
+    environment:
+      POSTGRES_DB: yeet_test_db
+      POSTGRES_USER: yeet_test_user
+      POSTGRES_PASSWORD: yeet_test_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./database/test-init:/docker-entrypoint-initdb.d
+    networks:
+      - yeet_network
+    profiles:
+      - testing
+
+  mailcatcher:
+    image: sj26/mailcatcher:latest
+    container_name: yeet_mailcatcher
+    restart: unless-stopped
+    ports:
+      - "1080:1080"  # Web interface
+      - "1025:1025"  # SMTP server
+    networks:
+      - yeet_network
+    profiles:
+      - development
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  yeet_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# =============================================================================
+# DEVELOPMENT COMMANDS
+# =============================================================================
+# Quick start: docker-compose up -d postgres redis
+# Full development: docker-compose --profile development up -d
+# With testing: docker-compose --profile testing up -d
+# With monitoring: docker-compose up -d postgres redis backend frontend prometheus grafana
+# 
+# Useful commands:
+# - View logs: docker-compose logs -f [service_name]
+# - Execute shell: docker-compose exec [service_name] /bin/sh
+# - Restart service: docker-compose restart [service_name]
+# - Database migration: docker-compose exec backend npm run db:migrate
+# - Seed database: docker-compose exec backend npm run db:seed
+# - Run tests: docker-compose exec backend npm test
+# - PostgreSQL shell: docker-compose exec postgres psql -U yeet_user -d yeet_db
+# - Redis CLI: docker-compose exec redis redis-cli -a yeet_redis_password
