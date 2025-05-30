@@ -1,0 +1,47 @@
+{
+  "name": "yeet-artistic-platform",
+  "version": 2,
+  "builds": [
+    {
+      "src": "yeet-website/package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/yeet-website/$1"
+    }
+  ],
+  "functions": {
+    "yeet-website/src/**": {
+      "includeFiles": "yeet-website/**"
+    }
+  },
+  "buildCommand": "cd yeet-website && npm run build",
+  "outputDirectory": "yeet-website/dist",
+  "installCommand": "cd yeet-website && npm install",
+  "devCommand": "cd yeet-website && npm run dev",
+  "framework": "vite",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
+}
