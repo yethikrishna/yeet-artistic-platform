@@ -1,488 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>YEET - Artistic Community Platform</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="YEET - Revolutionary artistic community platform by Yethikrishna R">
-    <meta name="keywords" content="YEET, artistic platform, Carnatic music, Yethikrishna R, creative community">
-    <title>YEET - Artistic Community Platform by Yethikrishna R</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:text/plain;base64,8J+OqA==" type="image/x-icon">
-    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #1a1a2e; 
+            color: #eee; 
+            text-align: center; 
         }
-        
-        body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0f1419 0%, #1a1f36 50%, #2d1b69 100%);
-            color: #00ff88;
-            min-height: 100vh;
-            overflow-x: hidden;
+        h1 { 
+            color: #00ff88; 
+            font-size: 3em; 
+            margin-bottom: 10px; 
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
+        p { 
+            font-size: 1.2em; 
+            margin: 20px 0; 
         }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+        .btn { 
+            display: inline-block; 
+            padding: 15px 30px; 
+            background: #00ff88; 
+            color: #1a1a2e; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 10px; 
+            font-weight: bold; 
         }
-        
-        .logo {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 30px #00ff88, 0 0 60px #00ff88;
-            animation: glow 2s ease-in-out infinite alternate;
+        .btn:hover { 
+            background: #00d4ff; 
         }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88; }
-            to { text-shadow: 0 0 30px #00ff88, 0 0 40px #00ff88; }
-        }
-        
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            color: #00d4ff;
-        }
-        
-        .tagline {
-            font-size: 1.1rem;
-            opacity: 0.7;
-            font-style: italic;
-        }
-        
-        .terminal {
-            background: rgba(26, 31, 54, 0.8);
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .terminal-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #333;
-        }
-        
-        .terminal-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .terminal-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .red { background: #ff5f57; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #28ca42; }
-        
-        .terminal-title {
-            margin-left: 1rem;
-            color: #888;
-            font-size: 0.9rem;
-        }
-        
-        .terminal-line {
-            margin: 0.8rem 0;
-            line-height: 1.4;
-        }
-        
-        .prompt {
-            color: #00d4ff;
-            font-weight: bold;
-        }
-        
-        .command {
-            color: #ff6b6b;
-        }
-        
-        .output {
-            color: #00ff88;
-            margin-left: 2rem;
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(45deg, #00ff88, #00d4ff);
-            color: #0f1419;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3);
-        }
-        
-        .btn.secondary {
-            background: linear-gradient(45deg, #ff6b6b, #ffa500);
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .feature-card {
-            background: rgba(26, 31, 54, 0.6);
-            border: 1px solid #00ff88;
-            border-radius: 10px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: #00d4ff;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: #00d4ff;
-        }
-        
-        .feature-description {
-            line-height: 1.6;
-            opacity: 0.8;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: scale(1.05);
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #00d4ff;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid #333;
-            opacity: 0.7;
-        }
-        
-        .social-links {
-            margin: 2rem 0;
-        }
-        
-        .social-link {
-            color: #00ff88;
-            text-decoration: none;
-            margin: 0 1rem;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-        
-        .social-link:hover {
-            color: #00d4ff;
-        }
-        
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .logo { font-size: 2.5rem; }
-            .subtitle { font-size: 1.2rem; }
-            .buttons { flex-direction: column; align-items: center; }
-            .features { grid-template-columns: 1fr; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-        }
-        
-        @media (max-width: 480px) {
-            .stats { grid-template-columns: 1fr; }
-            .terminal { padding: 1rem; }
-        }
-        
-        /* Loading animation */
-        .loading {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header loading">
-            <h1 class="logo">🎨 YEET</h1>
-            <p class="subtitle">Revolutionary Artistic Community Platform</p>
-            <p class="tagline">"Fusing Carnatic tradition with modern innovation" - Yethikrishna R</p>
-        </header>
+        <h1>🎨 YEET</h1>
+        <p><strong>Revolutionary Artistic Community Platform by Yethikrishna R</strong></p>
+        <p>"Fusing Carnatic tradition with modern innovation"</p>
         
-        <div class="terminal loading" style="animation-delay: 0.2s;">
-            <div class="terminal-header">
-                <div class="terminal-buttons">
-                    <div class="terminal-button red"></div>
-                    <div class="terminal-button yellow"></div>
-                    <div class="terminal-button green"></div>
-                </div>
-                <div class="terminal-title">yeet@platform:~</div>
-            </div>
-            
-            <div class="terminal-line">
-                <span class="prompt">yeet@platform:~$</span> 
-                <span class="command">./welcome --showcase</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">🎵 Initializing Carnatic music heritage integration...</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">🎯 Loading athletic precision methodologies...</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">📚 Connecting to "The Quantum Lotus" philosophy...</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">🎮 Activating 8 Cultural ART KEYS system...</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">🔐 Security protocols online (96/100 score)</span>
-            </div>
-            <div class="terminal-line">
-                <span class="output">✅ Platform ready - Quality score: 9.4/10</span>
-            </div>
-            <div class="terminal-line">
-                <span class="prompt">yeet@platform:~$</span> 
-                <span style="animation: blink 1s infinite;">_</span>
-            </div>
-        </div>
+        <p>🎵 Carnatic Music Heritage | 🎯 Athletic Precision | 📚 Quantum Philosophy</p>
         
-        <div class="buttons loading" style="animation-delay: 0.4s;">
-            <a href="https://6s1u9h74yr.space.minimax.io" class="btn" target="_blank">
-                🚀 Launch Platform
-            </a>
-            <a href="https://github.com/yethikrishna/yeet-artistic-platform" class="btn secondary" target="_blank">
-                📚 View Source
-            </a>
-        </div>
+        <a href="https://6s1u9h74yr.space.minimax.io" class="btn">🚀 Launch Platform</a>
+        <a href="https://github.com/yethikrishna/yeet-artistic-platform" class="btn">📚 View Code</a>
         
-        <div class="stats loading" style="animation-delay: 0.6s;">
-            <div class="stat-card">
-                <span class="stat-number">9.4/10</span>
-                <span class="stat-label">Quality Score ⭐</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">96/100</span>
-                <span class="stat-label">Security Rating 🔐</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">1,247+</span>
-                <span class="stat-label">Artists Ready 👥</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">342+</span>
-                <span class="stat-label">Active Challenges 🏆</span>
-            </div>
-        </div>
+        <h2>Platform Features</h2>
+        <p>✅ Terminal Interface with Cyberpunk Aesthetic</p>
+        <p>✅ Multi-Tier Creative Circles (6 Levels)</p>
+        <p>✅ Enhanced Security (96/100 Score)</p>
+        <p>✅ ART KEYS Gamification (8 Cultural Keys)</p>
+        <p>✅ Portfolio Management for Artists</p>
+        <p>✅ Creative Challenges with Prizes</p>
         
-        <div class="features loading" style="animation-delay: 0.8s;">
-            <div class="feature-card">
-                <span class="feature-icon">🖥️</span>
-                <h3 class="feature-title">Terminal Interface</h3>
-                <p class="feature-description">
-                    Cyberpunk aesthetic with 13+ interactive commands showcasing Yethikrishna R's multi-disciplinary artistic journey through music, athletics, and literature.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🎭</span>
-                <h3 class="feature-title">Creative Circles</h3>
-                <p class="feature-description">
-                    6-level progression system from Beginner Explorer to Legendary Creator, with feature unlocks and community recognition at each tier.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🔐</span>
-                <h3 class="feature-title">Enhanced Security</h3>
-                <p class="feature-description">
-                    Military-grade protection with multi-factor authentication, blockchain wallet integration, and cultural knowledge-based security challenges.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🎮</span>
-                <h3 class="feature-title">ART KEYS Gamification</h3>
-                <p class="feature-description">
-                    8 cultural keys representing mastery in Harmony, Precision, Narrative, Innovation, Aesthetics, Synthesis, Community, and Legacy.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🎵</span>
-                <h3 class="feature-title">Carnatic Heritage</h3>
-                <p class="feature-description">
-                    Traditional Indian classical music elements integrated respectfully with modern technology, preserving cultural heritage through innovation.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🎨</span>
-                <h3 class="feature-title">Portfolio Management</h3>
-                <p class="feature-description">
-                    Multi-media support for showcasing music, writing, athletics, and visual arts with community interaction and performance tracking.
-                </p>
-            </div>
-        </div>
+        <h2>Quality Metrics</h2>
+        <p><strong>Quality Score:</strong> 9.4/10 ⭐</p>
+        <p><strong>Security Rating:</strong> 96/100 🔐</p>
+        <p><strong>Community Ready:</strong> 1,247+ Artists 👥</p>
         
-        <footer class="footer loading" style="animation-delay: 1s;">
-            <div class="social-links">
-                <a href="https://github.com/yethikrishna" class="social-link" target="_blank">GitHub</a>
-                <a href="https://github.com/yethikrishna/yeet-artistic-platform" class="social-link" target="_blank">Repository</a>
-            </div>
-            <p>&copy; 2024 Yethikrishna R. Built with ❤️ for the global artistic community.</p>
-            <p><em>"Student by birth, singer by life" - Embracing tradition while innovating for the future</em></p>
-        </footer>
+        <hr style="margin: 40px 0; border: 1px solid #444;">
+        
+        <p><em>Built with ❤️ for the global artistic community</em></p>
+        <p>© 2024 Yethikrishna R</p>
     </div>
-    
-    <script>
-        // Add blinking cursor animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes blink {
-                0%, 50% { opacity: 1; }
-                51%, 100% { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Add intersection observer for loading animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.loading').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Add click effects for buttons
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple 0.6s ease-out;
-                    pointer-events: none;
-                `;
-                
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-        
-        // Add ripple animation
-        const rippleStyle = document.createElement('style');
-        rippleStyle.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(2);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(rippleStyle);
-    </script>
 </body>
 </html>
