@@ -2,29 +2,18 @@
   "name": "yeet-platform-by-yethikrishna",
   "version": 2,
   "framework": "vite",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
-  "devCommand": "npm run dev",
+  "buildCommand": "cd yeet-website && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "yeet-website/dist",
+  "installCommand": "cd yeet-website && npm install --legacy-peer-deps",
+  "devCommand": "cd yeet-website && npm run dev",
+  "env": {
+    "NPM_CONFIG_REGISTRY": "https://registry.npmjs.org/",
+    "NODE_ENV": "production"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
     }
   ]
 }
